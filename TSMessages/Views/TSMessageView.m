@@ -12,7 +12,7 @@
 #import "TSMessage.h"
 
 
-#define TSMessageViewPadding 15.0
+#define TSMessageViewPadding 5.0
 
 #define TSDesignFileName @"TSMessagesDefaultDesign.json"
 
@@ -277,6 +277,24 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
             
             [self addSubview:self.button];
             
+            self.textSpaceRight = self.button.frame.size.width + TSMessageViewPadding;
+        }
+        
+        if(([buttonTitle length]==0) && [current valueForKey:@"buttonImage"]){
+            _button = [UIButton buttonWithType:UIButtonTypeCustom];
+            [self.button addTarget:self
+                            action:@selector(buttonTapped:)
+                  forControlEvents:UIControlEventTouchUpInside];
+            
+            self.button.contentEdgeInsets = UIEdgeInsetsMake(0.0, 5.0, 0.0, 5.0);
+            [self.button sizeToFit];
+            self.button.frame = CGRectMake(screenWidth - TSMessageViewPadding - 31.0,
+                                           0.0,
+                                           31.0,
+                                           31.0);
+            UIImage *buttonImage = [UIImage imageNamed:[current valueForKey:@"buttonImage"]];
+            [self.button setImage:buttonImage forState:UIControlStateNormal];
+            [self addSubview:self.button];
             self.textSpaceRight = self.button.frame.size.width + TSMessageViewPadding;
         }
         
